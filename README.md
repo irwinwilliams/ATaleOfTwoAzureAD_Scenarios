@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# ATaleOfTwoAzureAD_Scenarios
+Attempting to demonstrate two Azure AD scenarios - Browser to Web Site &amp; API-based authentication
+=======
 ---
 services: active-directory
 <<<<<<< HEAD
@@ -160,3 +164,4 @@ The key files containing authentication logic are the following:
 **userDataCtrl.js** - shows how to extract user information from the cached id_token.
    
 >>>>>>> api-only
+>>>>>>> browser-no-api
