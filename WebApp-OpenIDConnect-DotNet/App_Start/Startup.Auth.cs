@@ -27,6 +27,7 @@ using Microsoft.Owin.Security.OpenIdConnect;
 using System.Configuration;
 using System.Globalization;
 using System.Threading.Tasks;
+using Microsoft.Owin.Security.ActiveDirectory;
 
 namespace WebApp_OpenIDConnect_DotNet
 {
@@ -69,6 +70,13 @@ namespace WebApp_OpenIDConnect_DotNet
                         }
                     }
                 });
+
+            app.UseWindowsAzureActiveDirectoryBearerAuthentication(
+              new WindowsAzureActiveDirectoryBearerAuthenticationOptions
+              {
+                  Audience = clientId,
+                  Tenant = tenant,
+              });
         }
     }
 }

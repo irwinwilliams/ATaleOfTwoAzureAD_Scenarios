@@ -1,5 +1,6 @@
 ---
 services: active-directory
+<<<<<<< HEAD
 platforms: dotnet
 author: dstrockis
 ---
@@ -11,6 +12,21 @@ This sample shows how to build a .Net MVC web application that uses OpenID Conne
 For more information about how the protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](http://go.microsoft.com/fwlink/?LinkId=394414).
 
 > Looking for previous versions of this code sample? Check out the tags on the [releases](../../releases) GitHub page.
+=======
+platforms: javascript
+author: jmprieur
+---
+
+> [AZURE.TIP] Try the preview of our new [developer portal](https://identity.microsoft.com/Docs/Web) that will help you get up and running with Azure Active Directory in just a few minutes!  The developer portal will walk you through the process of registering an app and integrating Azure AD into your code.  When you’re finished, you will have a simple application that can authenticate users in your tenant and a backend that can accept tokens and perform validation.  
+
+Integrating Azure AD into a single page app
+====================
+This sample demonstrates the use of ADAL for JavaScript for securing an single page app written independently of any frameworks, implemented with an ASP.NET Web API backend.
+
+ADAL for Javascript is an open source library.  For distribution options, source code, and contributions, check out the ADAL JS repo at https://github.com/AzureAD/azure-activedirectory-library-for-js.
+
+For more information about how the protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](http://go.microsoft.com/fwlink/?LinkId=394414).
+>>>>>>> api-only
 
 ## How To Run This Sample
 
@@ -23,8 +39,12 @@ Getting started is simple!  To run this sample you will need:
 ### Step 1:  Clone or download this repository
 
 From your shell or command line:
+<<<<<<< HEAD
 
 `git clone https://github.com/Azure-Samples/active-directory-dotnet-webapp-openidconnect.git`
+=======
+`git clone https://github.com/Azure-Samples/active-directory-javascript-singlepageapp-dotnet-webapi.git`
+>>>>>>> api-only
 
 ### Step 2:  Register the sample with your Azure Active Directory tenant
 
@@ -32,6 +52,7 @@ From your shell or command line:
 2. On the top bar, click on your account and under the **Directory** list, choose the Active Directory tenant where you wish to register your application.
 3. Click on **More Services** in the left hand nav, and choose **Azure Active Directory**.
 4. Click on **App registrations** and choose **Add**.
+<<<<<<< HEAD
 5. Enter a friendly name for the application, for example 'WebApp-OpenIDConnect-DotNet' and select 'Web Application and/or Web API' as the Application Type. For the sign-on URL, enter the base URL for the sample, which is by default `https://localhost:44320/`. Click on **Create** to create the application.
 6. While still in the Azure portal, choose your application, click on **Settings** and choose **Properties**.
 7. Find the Application ID value and copy it to the clipboard.
@@ -39,10 +60,28 @@ From your shell or command line:
 9. For the App ID URI, enter `https://<your_tenant_name>/WebApp-OpenIDConnect-DotNet`, replacing `<your_tenant_name>` with the name of your Azure AD tenant. 
 
 ### Step 3:  Configure the sample to use your Azure Active Directory tenant
+=======
+5. Enter a friendly name for the application, for example 'SinglePageApp-jQuery-DotNet' and select 'Web Application and/or Web API' as the Application Type. For the sign-on URL, enter the base URL for the sample, which is by default `https://localhost:44302/`. Click on **Create** to create the application.
+6. While still in the Azure portal, choose your application, click on **Settings** and choose **Properties**.
+7. Find the Application ID value and copy it to the clipboard.
+8. For the App ID URI, enter `https://<your_tenant_name>/SinglePageApp-jQuery-DotNet`, replacing `<your_tenant_name>` with the name of your Azure AD tenant. 
+9. Grant permissions across your tenant for your application. Go to Settings -> Properties -> Required Permissions, and click on the **Grant Permissions** button in the top bar. Click **Yes** to confirm.
+
+### Step 3:  Enable the OAuth2 implicit grant for your application
+
+By default, applications provisioned in Azure AD are not enabled to use the OAuth2 implicit grant. In order to run this sample, you need to explicitly opt in.
+
+1. From the former steps, your browser should still be on the Azure portal.
+2. From the application page, click on **Manifest** to open the inline manifest editor.
+3. Search for the `oauth2AllowImplicitFlow` property. You will find that it is set to `false`; change it to `true` and save the file.
+
+### Step 4:  Configure the sample to use your Azure Active Directory tenant
+>>>>>>> api-only
 
 1. Open the solution in Visual Studio 2013.
 2. Open the `web.config` file.
 3. Find the app key `ida:Tenant` and replace the value with your AAD tenant name.
+<<<<<<< HEAD
 4. Find the app key `ida:ClientId` and replace the value with the Application ID from the Azure portal.
 5. If you changed the base URL of the sample, find the app key `ida:PostLogoutRedirectUri` and replace the value with the new base URL of the sample.
 
@@ -91,3 +130,33 @@ The OpenID Connect & Cookie OWIN middleware in this project is created as a part
 12. If you want the user to be required to sign-in before they can see any page of the app, then in the `HomeController`, decorate the `HomeController` class with the `[Authorize]` attribute.  If you leave this out, the user will be able to see the home page of the app without having to sign-in first, and can click the sign-in link on that page to get signed in.
 13. Almost done!  Follow the steps in "Running This Sample" to register the application in your AAD tenant.
 14. In `web.config`, in `<appSettings>`, create keys for `ida:ClientId`, `ida:AADInstance`, `ida:Tenant`, and `ida:PostLogoutRedirectUri` and set the values accordingly.  For the public Azure AD, the value of `ida:AADInstance` is `https://login.microsoftonline.com/{0}`.
+=======
+4. Find the app key `ida:Audience` and replace the value with the Client ID from the Azure portal.
+5. Open the file `App/Scripts/App.js` and locate the line `window.config = ...`.
+6. Replace the value of `tenant` with your AAD tenant name.
+7. Replace the value of `clientId` with the Client ID from the Azure portal.
+
+### Step 5:  Run the sample
+
+Clean the solution, rebuild the solution, and run it. 
+
+You can trigger the sign in experience by either clicking on the sign in link on the top right corner, or by clicking directly on the Todo List tab.
+Explore the sample by signing in, adding items to the To Do list, removing the user account, and starting again. 
+
+## How To Deploy This Sample to Azure
+
+Coming soon.
+
+## About the Code
+
+The key files containing authentication logic are the following:
+
+**App.js** - Provides the app configuration values used by ADAL for driving protocol interactions with AAD, indicates which routes should not be accessed without previous authentication, issues login and logout requests to Azure AD, handles both successful and failed authentication callbacks from Azure AD, and displays information about the user received in the id_token.
+
+**index.html** - contains a reference to adal.js.
+
+**todoListCtrl.js**- shows how to take advantage of the acquireToken() method in ADAL to get a token for accessing a resource.
+
+**userDataCtrl.js** - shows how to extract user information from the cached id_token.
+   
+>>>>>>> api-only
